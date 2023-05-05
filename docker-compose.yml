@@ -1,0 +1,29 @@
+version: "3.9"
+services:
+
+  spring-boot-app:
+    container_name: user-service-container
+    image: tamermg/user-service:0.0.1
+    restart: always
+    build: .
+    ports:
+      - 9002:9002
+    environment:
+      MYSQL_HOST: user-db
+      MYSQL_USER: userservice 
+      MYSQL_PASSWORD: userservice
+      MYSQL_PORT: 3306         
+
+  mysqldb:
+    container_name: user-db
+    image: mysql
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: usersDb
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - users-volume:/var/lib/mysql
+
+volumes:
+  users-volume:
