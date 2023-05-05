@@ -1,0 +1,29 @@
+version: "3.9"
+services:
+
+  spring-boot-app:
+    container_name: department-service-container
+    image: tamermg/department-service:0.0.1
+    restart: always
+    build: .
+    ports:
+      - 9001:9001
+    environment:
+      MYSQL_HOST: department-db
+      MYSQL_USER: departmentservice
+      MYSQL_PASSWORD: root
+      MYSQL_PORT: 3306
+
+  mysqldb:
+    container_name: department-db
+    image: mysql
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_DATABASE: departmentsDb
+      MYSQL_ROOT_PASSWORD: departmentservice
+    volumes:
+      - departments-volume:/var/lib/mysql
+
+volumes:
+  departments-volume:
